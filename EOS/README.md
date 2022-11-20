@@ -1,18 +1,18 @@
 # Classical treatment of atom field interaction
 
 ## Classical field
-$$\tag{1} E(\vec r, t) = E_0 e^{i(\omega t - \vec k \cdot \vec r)} $$ 
+$$\tag{1} \vec E(\vec r, t) = \vec E_0 e^{i(\omega t - \vec k \cdot \vec r)} $$ 
 $$\omega = 2 \pi f$$ 
 
-$E_0$ : Amplitude of electric field (V/m)
+$\vec E_0$ : Amplitude vector of electric field (V/m)
 $\\ f$: Frequency of electric field (Hz)
-$\\ I = \sqrt{\frac{\varepsilon_0}{\mu_0}}|E(\vec r, t)|^2$: Instensity (W/m<sup>2</sup>)
+$\\ I = \sqrt{\frac{\varepsilon_0}{\mu_0}}| \vec E(\vec r, t)|^2$: Instensity (W/m<sup>2</sup>)
 
 
 ## Electron a spring Model (EOS)
 ### Equation of motion
-$$\tag{2} m \frac{d^2 x}{ dt^2} + b \frac{dx}{dt} + kx = q E(\vec x, t)$$
-Note: $E(\vec x,t) \approx E(t) = E_0 e^{i\omega t}$ at electronic scales
+$$\tag{2} m \frac{d^2 \vec r}{ dt^2} + b \frac{d \vec r}{dt} + kx = q E(\vec r, t)$$
+Note: $E(\vec r,t) \approx E(t) = \vec E_0 e^{i\omega t}$ at electronic scales
 
 $m$: Mass of atom (kg)
 $\\ b$: Damping constant (kg/s) 
@@ -26,19 +26,29 @@ $$\tag{3} \frac{d^2 x}{ dt^2} + \gamma \frac{dx}{dt} + \omega_0^2x = F(t)$$
 $\\ \omega_0 = \sqrt \frac{k}{m}$: Oscillator frequency 
 $\\ \gamma = \frac{b}{m}$: Damping rate
 
+<!-- ### Boundary condition
+EM field switched on at t=0
+
+So, $F(0^-) = 0$ gives
+$$x(t) = c_1 e^{-\gamma t/2}(e^{ (\sqrt{\gamma^2 - 4 \omega_0^2} - \gamma) t/2} - c_2 e^{ (\sqrt{\gamma^2 - 4 \omega_0^2} - \gamma) t/2})$$
+
+$$x(0^-) = c_1(1 - c_2)$$ -->
+
 ### Solution
-$$\tag{4} x(t) = Ae^{i \omega t}$$
-$$A = \frac{q E_0}{m} \frac{1}{(\omega_0^2 - \omega^2 + i \gamma \omega)}$$
+$$\tag{4} \vec r(t) = \vec Ae^{i \omega t}$$
+$$\vec A = \frac{q \vec E_0}{m} \frac{1}{(\omega_0^2 - \omega^2 + i \gamma \omega)}$$
+
+Similarly,
 
 ### Induced dipole moment
-$$\tag{5} p(t) = qx(t)$$
+$$\tag{5} \vec p(t) = q \vec r(t)$$
 
 ### Macroscopic polarization
-$$\tag{6} P(t) = Np(t)$$
+$$\tag{6} \vec P(t) = N\vec p(t)$$
 $N$: oscillators per unit volume (cm<sup>-3</sup>)
 
 ### Maxwell Equation
-$$\tag{7} P(t) = \varepsilon_0 \chi E(t)$$
+$$\tag{7} \vec P(t) = \varepsilon_0 \chi \vec E(t)$$
 $\chi$: Susceptiblity
 
 Comparing $(6)$ and $(7)$,
