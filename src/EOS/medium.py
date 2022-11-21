@@ -1,8 +1,6 @@
-from cmath import *
-from sympy.physics.vector import dynamicsymbols
 import sympy as sym
-from sympy.vector import Vector
-from utils import *
+
+from ..utils.Base import Base
 
 class Medium(Base):
     def __init__(self, x,y,z,t):

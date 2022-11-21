@@ -47,12 +47,17 @@ $$\tag{5} \vec p(t) = q \vec r(t)$$
 $$\tag{6} \vec P(t) = N\vec p(t)$$
 $N$: oscillators per unit volume (cm<sup>-3</sup>)
 
+
+
+We get 
+$$\vec P(t) =  \frac{\vec E_0 N q^{2} e^{i t w}}{m \left(i \gamma w - w^{2} + w_{0}^{2}\right)}$$
+
 ### Maxwell Equation
-$$\tag{7} \vec P(t) = \varepsilon_0 \chi \vec E(t)$$
+$$\tag{7} \vec P(t) = \varepsilon_0 \overline{\overline{\chi}} \vec E(t)$$
 $\chi$: Susceptiblity
 
 Comparing $(6)$ and $(7)$,
-$$\tag{8} \chi =\frac{Nq^2}{\varepsilon_0 m} \frac{1}{(\omega_0^2 - \omega^2 + i \gamma \omega)}$$
+$$\tag{8} \overline{\overline{\chi}} =\frac{Nq^2}{\varepsilon_0 m} \frac{1}{(\omega_0^2 - \omega^2 + i \gamma \omega)}$$
 $$$$
 
 $$\tag{9} \varepsilon = 1+ \chi$$
@@ -70,7 +75,7 @@ Imaginary part of complex refractive index ($\xi$) gives absorption
 
 ### EM field in the medium
 In the medium, $\vec k' = n \vec k$
-$$\tag{12} E(\vec r, t) = E_0 e^{i(\omega t - \vec k' \cdot \vec r)} $$ 
+$$\tag{12} \vec E(\vec r, t) = \vec E_0 e^{i(\omega t - \vec k' \cdot \vec r)} $$ 
 
 
 ### Absorption Coefficient
@@ -82,6 +87,9 @@ $$\tag{14} I = I_0 e^{- \vec \alpha \cdot \vec r}$$
 ### Kramers-Kroning Dispersion relations
 After substituting all values and simplifying under the near-resonance assumption ($\omega \approx \omega_0$), 
 $$\alpha(\omega) =|\vec \alpha| = \frac{Nq^2}{4 \varepsilon_0 m c} \frac{\gamma}{(\omega_0 - \omega)^2 + (\gamma/2)^2}$$
+
+<!-- $$\frac{3.33564095198152 \cdot 10^{-9} N \gamma q^{2} w^{2}}{m \left(\gamma^{2} w^{2} + \left(w^{2} - w_{0}^{2}\right)^{2}\right) \varepsilon_0}$$ -->
+
 $$\eta(\omega) =1 + \frac{Nq^2}{4 \varepsilon_0 m \omega_0} \frac{\omega_0 - \omega}{(\omega_0 - \omega)^2 + (\gamma/2)^2}$$
 
 So, we expect a Lorentzian profile for the absorption coefficient ($\alpha$)
