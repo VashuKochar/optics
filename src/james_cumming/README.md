@@ -3,6 +3,8 @@
 ## Introduction
 The Jaynes-Cumming model is the simplest possible model of quantum mechanical light-matter interaction, describing a single two-level atom interacting with a single electromagnetic cavity mode. 
 
+![model image](../../images/jaynes_cummings_model.png)
+
 ## Model
 The Hamiltonian for this system is (in dipole interaction form)
 $$H = \hbar \omega_c a^\dagger a + \frac{1}{2} \hbar \omega_a \sigma_z + \hbar g (a^\dagger + a)(\sigma_- + \sigma_+)$$
