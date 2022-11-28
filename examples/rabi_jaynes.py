@@ -5,7 +5,7 @@ import numpy as np
 from qutip import about, basis, destroy, mesolve, ptrace, qeye, tensor, wigner
 
 from optics.atom.atoms import test_atom
-from optics.james_cumming.model import Model
+from optics.jaynes_cumming.model import Model
 
 from optics.cavity.cavity import Cavity
 
@@ -31,14 +31,22 @@ couple = 0.05 * 2 * np.pi
 avg_thermal_excitation = 0.0
 
 
-# load james_cumming_model
-james =  Model(atom, cavity, couple, avg_thermal_excitation)
+# load jaynes_cumming_model
+jaynes =  Model(atom, cavity, couple, avg_thermal_excitation)
+
+# Construct collapse operators (to account for dissipation)
+jaynes.constructCollapseOperators()
+print("collapse operators: ", jaynes.collapseOperators)
+
+# Construct hamiltonian with rwa approximation
+jaynes.constructHamiltonian(True)
+print("Hamiltonian: ", jaynes.hamiltonian)
 
 # Expectations
-expect = [james.cavity_annhilation.dag() * james.cavity_annhilation, james.atom_spin.dag() * james.atom_spin]
+expect = [jaynes.cavity_annhilation.dag() * jaynes.cavity_annhilation, jaynes.atom_spin.dag() * jaynes.atom_spin]
 
 # Solve hamiltonian
-soln = james.solve(tlist, expectations = expect)
+soln = jaynes.solve(tlist, expectations = expect)
 
 # Visualise results
 n_c = soln[0]

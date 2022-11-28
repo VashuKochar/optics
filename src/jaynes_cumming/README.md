@@ -1,4 +1,4 @@
-# James-Cumming Model
+# Jaynes-Cumming Model
 
 ## Introduction
 The Jaynes-Cumming model is the simplest possible model of quantum mechanical light-matter interaction, describing a single two-level atom interacting with a single electromagnetic cavity mode. 

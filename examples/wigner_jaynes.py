@@ -5,7 +5,7 @@ import numpy as np
 from qutip import about, basis, destroy, mesolve, ptrace, qeye, tensor, wigner
 
 from optics.atom.atom import Atom
-from optics.james_cumming.model import Model
+from optics.jaynes_cumming.model import Model
 
 from optics.cavity.cavity import Cavity
 
@@ -46,25 +46,25 @@ couple = 0.05 * 2 * np.pi
 # External Influences
 avg_thermal_excitation = 0.0
 
-# load james_cumming_model
-james =  Model(atom, cavity, couple, avg_thermal_excitation)
-print("Initial state: ", james.state)
-print("a: ", james.cavity_annhilation)
-print("sm: ", james.atom_spin)
+# load jaynes_cumming_model
+jaynes =  Model(atom, cavity, couple, avg_thermal_excitation)
+print("Initial state: ", jaynes.state)
+print("a: ", jaynes.cavity_annhilation)
+print("sm: ", jaynes.atom_spin)
 
 # Construct collapse operators
-james.constructCollapseOperators()
-print("collapse operators: ", james.collapseOperators)
+jaynes.constructCollapseOperators()
+print("collapse operators: ", jaynes.collapseOperators)
 
 # Construct hamiltonian with rwa approximation
-james.constructHamiltonian(True)
-print("Hamiltonian: ", james.hamiltonian)
+jaynes.constructHamiltonian(True)
+print("Hamiltonian: ", jaynes.hamiltonian)
 
 # Solve hamiltonian
-soln = james.solve(tlist)
+soln = jaynes.solve(tlist)
 
 print(len(soln))
-print(james.state[0][0][0])
+print(jaynes.state[0][0][0])
 
 # get a list density matrices
 rho_list = [soln[i] for i in t_idx]
