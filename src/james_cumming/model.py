@@ -19,43 +19,45 @@ class Model:
         # operators
         self.cavity_annhilation = tensor(destroy(self.cavity.no_states), qeye(self.atom.no_states))
         self.atom_spin = tensor(qeye(self.cavity.no_states), destroy(self.atom.no_states))
+        self.hamiltonian = None
+        self.collapseOperators = []
 
-    def collapseOperators(self) -> List[Qobj]:
-        c_ops = []
+    def constructCollapseOperators(self) -> List[Qobj]:
 
         # cavity relaxation
         rate = self.cavity.dissipation_rate * (1 + self.avg_thermal_excitation)
         if rate > 0.0:
-            c_ops.append(np.sqrt(rate) * self.cavity_annhilation)
+            self.collapseOperators.append(np.sqrt(rate) * self.cavity_annhilation)
 
         # cavity excitation, if temperature > 0
         rate = self.cavity.dissipation_rate * self.avg_thermal_excitation
         if rate > 0.0:
-            c_ops.append(np.sqrt(rate) * self.cavity_annhilation.dag())
+            self.collapseOperators.append(np.sqrt(rate) * self.cavity_annhilation.dag())
 
         # qubit relaxation
-        rate = self.cavity.dissipation_rate
+        rate = self.atom.dissipation_rate
         if rate > 0.0:
-            c_ops.append(np.sqrt(rate) * self.atom_spin)
+            self.collapseOperators.append(np.sqrt(rate) * self.atom_spin)
             
-        return c_ops
+        return self.collapseOperators
 
-    def solve(self, tlist: List[float], rwa: bool = True, expectations: List[Qobj] = []) -> Result:
-        
-        
-        # Construct hamiltonian
-        if rwa:
-            H = 1*(self.cavity.frequency * self.cavity_annhilation.dag() * self.cavity_annhilation + self.atom.frequency * self.atom_spin.dag() * self.atom_spin + self.coupling * (self.cavity_annhilation.dag() * self.atom_spin + self.cavity_annhilation * self.atom_spin.dag()))
+    def constructHamiltonian(self, rwa: bool = True):
+        if rwa == True:
+            self.hamiltonian = 1*(self.cavity.frequency * self.cavity_annhilation.dag() * self.cavity_annhilation + self.atom.frequency * self.atom_spin.dag() * self.atom_spin + self.coupling * (self.cavity_annhilation.dag() * self.atom_spin + self.cavity_annhilation * self.atom_spin.dag()))
         else:
-            H = 1*(self.cavity.frequency * self.cavity_annhilation.dag() * self.cavity_annhilation + self.atom.frequency * self.atom_spin.dag() * self.atom_spin + self.coupling * (self.cavity_annhilation.dag() + self.cavity_annhilation) *(self.atom_spin* self.atom_spin.dag()))
+            self.hamiltonian = 1*(self.cavity.frequency * self.cavity_annhilation.dag() * self.cavity_annhilation + self.atom.frequency * self.atom_spin.dag() * self.atom_spin + self.coupling * (self.cavity_annhilation.dag() + self.cavity_annhilation) *(self.atom_spin* self.atom_spin.dag()))
+            
+        return self.hamiltonian
 
-        collapse = self.collapseOperators()
-
+    
+    def solve(self, tlist: List[float], expectations: List[Qobj] = []) -> Result:
+                
         # Evolve the system
-        output = mesolve(H, self.state, tlist, collapse, expectations)
+        output = mesolve(self.hamiltonian, self.state, tlist, self.collapseOperators, expectations)
         
         if expectations == []:
             self.state = output.states[-1]
+            print("State changed")
             return output.states
         else:    
             return output.expect

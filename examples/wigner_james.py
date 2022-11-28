@@ -31,7 +31,7 @@ X_START = -3
 X_END = 3
 X_STEPS = 200
 X_DELTA = (X_END - X_START)/X_STEPS
-xlist = np.linspace(0, X_END, X_STEPS)
+xlist = np.linspace(X_START, X_END, X_STEPS)
 print("Discretising space from x=",X_START," to x=", X_END, "with dx = ", X_DELTA)
 
 # Create atom
@@ -46,15 +46,25 @@ couple = 0.05 * 2 * np.pi
 # External Influences
 avg_thermal_excitation = 0.0
 
-
 # load james_cumming_model
 james =  Model(atom, cavity, couple, avg_thermal_excitation)
+print("Initial state: ", james.state)
+print("a: ", james.cavity_annhilation)
+print("sm: ", james.atom_spin)
+
+# Construct collapse operators
+james.constructCollapseOperators()
+print("collapse operators: ", james.collapseOperators)
+
+# Construct hamiltonian with rwa approximation
+james.constructHamiltonian(True)
+print("Hamiltonian: ", james.hamiltonian)
 
 # Solve hamiltonian
 soln = james.solve(tlist)
 
-# print(len(soln))
-print(james.state)
+print(len(soln))
+print(james.state[0][0][0])
 
 # get a list density matrices
 rho_list = [soln[i] for i in t_idx]
@@ -70,7 +80,7 @@ for idx, rho in enumerate(rho_list):
     # trace out the atom from the density matrix, to obtain
     # the reduced density matrix for the cavity
     rho_cavity = rho.ptrace(0)
-
+    print(rho_cavity)
     # calculate its wigner function
     W = wigner(rho_cavity, xlist, xlist)
 
