@@ -51,3 +51,9 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
+
+# Databases
+db.sqlite3
+
+# Virtual environment
+virtual_env/*

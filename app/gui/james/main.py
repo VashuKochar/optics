@@ -1,6 +1,5 @@
 from tkinter import Tk, TclError, ttk, W, StringVar, Frame, Label, Entry, Checkbutton, Button, OptionMenu, IntVar, DoubleVar, BooleanVar, Scrollbar
 import numpy as np
-from PIL import ImageTk, Image
 import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
