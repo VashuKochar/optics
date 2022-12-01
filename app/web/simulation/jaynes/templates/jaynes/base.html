@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}Jaynes-Cumming Model{% endblock %}
+
+{% block secondaryNavbar %}
+<ul class="navbar">
+    <li class="navbar"><a class="navbar" href="{% url 'rabi' %}">Vaccuum Rabi Oscillations</a></li>
+    <li class="navbar"><a class="navbar" href="{% url 'wigner' %}">Wigner Functions</a></li>
+</ul> 
+{% endblock %}

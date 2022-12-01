@@ -4,17 +4,20 @@
         <title>Jaynes-Cumming Model</title>
         {% load static %}
         <script src="{% static 'js/jquery-3.6.1.min.js' %}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.0.1/chart.min.js"></script>
+        <script src="https://cdn.plot.ly/plotly-2.16.1.min.js"></script> 
         <script src="{% static 'js/james_cumming.js' %}"></script>
         <link rel="stylesheet" href="{% static 'css/w3.css' %}">
+        <link rel="stylesheet" href="{% static 'css/slider.css' %}">
         <link rel="stylesheet" href="{% static 'css/main.css' %}">
     </head>
 <body>
 
-<h1>Jaynes-Cumming Model</h1>
+<h1 class="title">Jaynes-Cumming Model</h1>
 
 <div id="model">
-    <div class="w3-cell-row">
-        <div class="w3-container w3-cell">
+    <div class="grid-3">
+        <div class="container">
             <h2>Atom</h2>
             <label for="atomic_frequency">Frequency:</label>
             <input type="text" id="atomic_frequency" name="atomic_frequency" value="6.283185307179586"><br>
@@ -26,46 +29,63 @@
             <input type="radio" id="atomic_initial_excited" name="atomic_initial" value="1" checked>
             <label for="atomic_initial_excited">Excited</label>
         </div>
-        <div class="w3-container w3-cell">
+        <div class="container">
             <h2>Cavity</h2>
             <label for="cavity_frequency">Frequency:</label>
             <input type="text" id="cavity_frequency" name="cavity_frequency" value="6.283185307179586"><br>
             <label for="cavity_dissipation">Dissipation rate:</label>
-            <input type="text" id="cavity_dissipation" name="cavity_dissipation" value="0.005">
+            <input type="text" id="cavity_dissipation" name="cavity_dissipation" value="0.005"><br>
             <label for="cavity_initial">Initial state:</label>
             <input type="text" id="cavity_initial" name="cavity_initial" value="0">
         </div>
-        <div class="w3-container w3-cell">
+        <div class="container">
             <h2>Model parameters</h2>
             <label for="coupling">Coupling constant:</label>
             <input type="text" id="coupling" name="coupling" value="0.3141592653589793"><br>
             <label for="thermal">Avg thermal excitation:</label>
-            <input type="text" id="thermal" name="thermal" value="0.0">
-            <input type="checkbox" id="rwa" name="rwa" checked>
+            <input type="text" id="thermal" name="thermal" value="0.0"><br>
             <label for="rwa">Rotating wave approximation:</label>
+            <input type="checkbox" id="rwa" name="rwa" checked>
         </div>
     </div>
-    <div class="w3-cell-row">
-        <div class="w3-container w3-cell w3-left">
-            <h2>Space and Time</h2>
-            <label for="x">|x|:</label>
-            <input type="text" id="x" name="x" value="3"><br>
-            <label for="no_x">No of steps in x:</label>
-            <input type="text" id="no_x" name="no_x" value="200"><br>
-            <label for="t">t:</label>
-            <input type="text" id="t" name="t" value="25"><br>
-            <label for="no_t">No of steps in t:</label>
-            <input type="text" id="no_t" name="no_t" value="101">
-            <br>
-            <button id="run">Run model</button>
-        </div>
-        
-        <div class="w3-container w3-cell w3-right">
-            <div id="rabi" class="row-1-2">
+    <div class="grid-4">
+        <div class="grid-2">
+            <div class="container" >
+                <label for="x">x: </label>
+                <div class="content"></div>
+                <div class="slidecontainer">
+                    <input id="x" name="x" class="slider" type="range" min="0" max="100" value="3">
+                </div>
             </div>
-            <div id="wigner" class="row-1-2">
+            <div class="container">
+                <label for="no_x">No of steps in x:</label>
+                <div class="content"></div>
+                <div class="slidecontainer">
+                    <input id="no_x" name="no_x" class="slider" type="range" min="0" max="100" value="100">
+                </div>
             </div>
         </div>
+        <div class="grid-2">
+            <div class="container">
+                <label for="t">t:</label>
+                <div class="content"></div>
+                <div class="slidecontainer">
+                    <input id="t" name="t" class="slider" type="range" min="0" max="100" value="25">
+                </div>
+            </div>
+            <div class="container">
+                <label for="no_t">No of steps in t:</label>
+                <div class="content"></div>
+                <div class="slidecontainer">
+                    <input id="no_t" name="no_t" class="slider" type="range" min="0" max="10000" value="100">
+                </div>
+            </div>
+        </div>
+        <button id="rabi">Show Vaccuum Rabi Oscillations</button>
+        <button id="wigner">Get Wigner Function</button>
+    </div>
+    <div class="grid-4" id="graphs">
+    </div>
 
     </div>
 </form>

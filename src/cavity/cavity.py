@@ -8,3 +8,11 @@ class Cavity():
         self.no_states = no_states
         self.state = basis(no_states, current_state)
     
+    def __str__(self):
+        data = []
+        data.append(f"Cavity Frequency: {self.frequency}")
+        data.append(f"Cavity Dissipation rate: {self.dissipation_rate}")
+        data.append(f"Cavity no of states: {self.no_states}")
+        data.append(f"Cavity state: {self.state}")
+
+        return "\n".join(data)

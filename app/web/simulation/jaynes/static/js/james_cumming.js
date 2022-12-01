@@ -1,8 +1,20 @@
 $(document).ready(function () {
-    $("#run").click(function(){
-        console.log("run button clicked");
-        run()
+    $("#rabi").click(showRabiGraph);
+    $("#wigner").click(function(){
+        showWignerGraph();
     });
+    $("input.slider").each(function( i ) {
+        this.parentElement.previousElementSibling.innerHTML = this.value
+        this.oninput = function() {
+            console.log("Slider moved");
+            console.log(this);
+            console.log(this.parentElement);
+            // this.before(this.value)
+            this.parentElement.previousElementSibling.innerHTML = this.value
+            // .prev("p").text();
+        }
+    });
+    
 });
 
 function fetchmodel() {
@@ -24,29 +36,103 @@ function fetchmodel() {
     return model
 }
 
-function api(resource, data, dom){
-    console.log("Fetch request to: " + resource);
-    // $.post(resource, data,
-    //     function (data, textStatus, jqXHR) {
-    //         dom.append(jqXHR);
-    //     },
-    //     "text"
-    // );
-    
+function showRabiGraph() {
+    console.log("Show Rabi Graph");
+    data = fetchmodel();
     $.ajax({
         type: "POST",
-        url: resource,
+        url: "rabi",
         data: data,
-        dataType: "text",
-        success: function (response) {
-            dom.append(response);
-        }
+        dataType: "json",
+        success:  function (response) {
+            console.log(response);
+            canvas = $('<canvas id="rabi" width="1000"></canvas>');
+            $("#graph").html(canvas);
+
+            new Chart(canvas, {
+                type: 'line',
+                data: {
+                    labels: response.labels,
+                    datasets: [{
+                        label: 'Cavity',
+                        borderColor: 'rgb(255, 0,0)',
+                        data: response.data_cavity
+                    }, {
+                        label: 'Atom excited state',
+                        borderColor: 'rgb(0, 0, 255)',
+                        data: response.data_atom
+                    }]          
+                },
+                options: {
+                    responsive: true,
+                        legend: {
+                            position: 'top',
+                        },
+                    title: {
+                        display: true,
+                        text: 'Vacuum Rabi oscillations'
+                    },
+                    scales: {
+                        xAxes: [{
+                          scaleLabel: {
+                                display: true,
+                                labelString: 'Time'
+                            }
+                        }],
+                        yAxes: [{
+                          scaleLabel: {
+                                display: true,
+                                labelString: 'Occupation probability'
+                            }
+                        }]
+                    }
+                }
+            });
+        },
     });
 }
-
-function run() {
-    model = fetchmodel();
-    console.log(model);
-    api("rabi",model, $("#rabi"));
-    api("wigner",model, $("#wigner"));
+function showWignerGraph() {
+    console.log("Show Wigner Graph");
+    data = fetchmodel();
+    data["tinterest"] = [$("#t1").val(), $("#t2").val(), $("#t3").val(), $("#t4").val()]
+    $.ajax({
+        type: "POST",
+        url: "wigner",
+        data: data,
+        dataType: "json",
+        success:  function (response) {
+            console.log(response);
+            $("#graphs").empty();
+            for (const GraphKey in response.wigner_data) {
+                if (Object.hasOwnProperty.call(response.wigner_data, GraphKey)) {
+                    const element = response.wigner_data[GraphKey];
+                    canvas = $(`<div id="wigner-${GraphKey}"></div>`);
+                    $("#graphs").append(canvas);
+                    canvas = document.getElementById(`wigner-${GraphKey}`);
+                    plotSettings = [ {
+                        z: element,
+                        x: response.labels,
+                        y: response.labels,
+                        type: 'contour',
+                    }];
+                    layout = {
+                        autosize: true,
+                        width: $( document ).width()/response.wigner_data.length,
+                        height: $( document ).width()/response.wigner_data.length,
+                        title: `T = ${response.time[GraphKey]}`,
+                    }
+                    console.log(plotSettings);
+                    Plotly.newPlot( canvas, plotSettings, layout);
+                }
+            }
+        },
+    });
+    console.log(data);
 }
+
+// function run() {
+//     model = fetchmodel();
+//     console.log(model);
+//     showRabiGraph(model);
+//     showWignerGraph(model);
+// }

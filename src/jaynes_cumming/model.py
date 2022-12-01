@@ -61,3 +61,15 @@ class Model:
             return output.states
         else:    
             return output.expect
+
+    def __str__(self):
+        data = []
+        data.append(str(self.atom))
+        data.append(str(self.cavity))
+        data.append(f"Coupling: {self.coupling}")
+        data.append(f"Avg Thermal Excitation: {self.avg_thermal_excitation}")
+        data.append(f"Hamiltonian: {self.hamiltonian}")
+        data.append(f"Collapse operators: {self.collapseOperators}")
+        data.append(f"Model State: {self.state}")
+
+        return "\n".join(data)

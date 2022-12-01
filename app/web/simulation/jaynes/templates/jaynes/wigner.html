@@ -1,0 +1,105 @@
+{% extends 'jaynes/base.html' %}
+
+{% block content %}
+<div class="grid-3">
+    <div class="container">
+        <h2>Atom</h2>
+        <label for="atomic_frequency">Frequency:</label>
+        <input type="text" id="atomic_frequency" name="atomic_frequency" value="6.283185307179586"><br>
+        <label for="atomic_dissipation">Dissipation rate:</label>
+        <input type="text" id="atomic_dissipation" name="atomic_dissipation" value="0.05"><br>
+        <label for="atomic_initial">Initial state:</label>
+        <input type="radio" id="atomic_initial_ground" name="atomic_initial" value="0">
+        <label for="atomic_initial_ground">Ground</label>
+        <input type="radio" id="atomic_initial_excited" name="atomic_initial" value="1" checked>
+        <label for="atomic_initial_excited">Excited</label>
+    </div>
+    <div class="container">
+        <h2>Cavity</h2>
+        <label for="cavity_frequency">Frequency:</label>
+        <input type="text" id="cavity_frequency" name="cavity_frequency" value="6.283185307179586"><br>
+        <label for="cavity_dissipation">Dissipation rate:</label>
+        <input type="text" id="cavity_dissipation" name="cavity_dissipation" value="0.005"><br>
+        <label for="cavity_initial">Initial state:</label>
+        <input type="text" id="cavity_initial" name="cavity_initial" value="0">
+    </div>
+    <div class="container">
+        <h2>Model parameters</h2>
+        <label for="coupling">Coupling constant:</label>
+        <input type="text" id="coupling" name="coupling" value="0.3141592653589793"><br>
+        <label for="thermal">Avg thermal excitation:</label>
+        <input type="text" id="thermal" name="thermal" value="0.0"><br>
+        <label for="rwa">Rotating wave approximation:</label>
+        <input type="checkbox" id="rwa" name="rwa" checked>
+    </div>
+</div>
+<div class="grid-2">
+    <div class="grid-2">
+        <div class="container" >
+            <label for="x">x: </label>
+            <div class="content"></div>
+            <div class="slidecontainer">
+                <input id="x" name="x" class="slider" type="range" min="0" max="100" value="3">
+            </div>
+        </div>
+        <div class="container">
+            <label for="no_x">No of steps in x:</label>
+            <div class="content"></div>
+            <div class="slidecontainer">
+                <input id="no_x" name="no_x" class="slider" type="range" min="0" max="100" value="100">
+            </div>
+        </div>
+    </div>
+    <div class="grid-2">
+        <div class="container">
+            <label for="t">t:</label>
+            <div class="content"></div>
+            <div class="slidecontainer">
+                <input id="t" name="t" class="slider" type="range" min="0" max="100" value="25">
+            </div>
+        </div>
+        <div class="container">
+            <label for="no_t">No of steps in t:</label>
+            <div class="content"></div>
+            <div class="slidecontainer">
+                <input id="no_t" name="no_t" class="slider" type="range" min="0" max="10000" value="100">
+            </div>
+        </div>
+    </div>    
+</div>
+<div class="grid-4">
+    <div class="container">
+        <label for="t1">t1:</label>
+        <div class="content"></div>
+        <div class="slidecontainer">
+            <input id="t1" name="t1" class="slider" type="range" min="0" max="100" value="0">
+        </div>
+    </div>
+    <div class="container">
+        <label for="t2">t2:</label>
+        <div class="content"></div>
+        <div class="slidecontainer">
+            <input id="t2" name="t2" class="slider" type="range" min="0" max="100" value="5">
+        </div>
+    </div>
+    <div class="container">
+        <label for="t3">t3:</label>
+        <div class="content"></div>
+        <div class="slidecontainer">
+            <input id="t3" name="t3" class="slider" type="range" min="0" max="100" value="15">
+        </div>
+    </div>
+    <div class="container">
+        <label for="t4">t4:</label>
+        <div class="content"></div>
+        <div class="slidecontainer">
+            <input id="t4" name="t4" class="slider" type="range" min="0" max="100" value="25">
+        </div>
+    </div>
+</div>
+<button id="wigner">Show Wigner functions</button>
+
+<div class="grid-4" id="graphs">
+</div>
+
+{% endblock %}
